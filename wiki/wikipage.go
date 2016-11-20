@@ -13,6 +13,13 @@ import (
 
 const wikiURL = "https://en.wikipedia.org/w/api.php"
 
+// Page a structure for a wikipage
+type Page struct {
+	Title string
+	Words []string
+	URL   string
+}
+
 type apiResponse struct {
 	Query struct {
 		Pages map[string]struct {
@@ -69,11 +76,5 @@ func GetPage(pageID string) (*Page, error) {
 
 	wordRegexp := regexp.MustCompile("\\w{4,}")
 	words := wordRegexp.FindAllString(apiR.Query.Pages[pageID].Extract, -2)
-	return &Page{apiR.Query.Pages[pageID].Title, words}, nil
-}
-
-// Page a structure for a wikipage
-type Page struct {
-	Title string
-	Words []string
+	return &Page{apiR.Query.Pages[pageID].Title, words, resp.Request.URL.String()}, nil
 }

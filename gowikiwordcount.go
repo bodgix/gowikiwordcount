@@ -23,7 +23,8 @@ func main() {
 	}
 
 	wordsWithCount := tools.TopN(page.Words, n)
-	fmt.Println(page.Title)
+	fmt.Println("URL:", page.URL)
+	fmt.Println("Title:", page.Title)
 	fmt.Println()
 	for _, word := range wordsWithCount {
 		fmt.Println("-", word.Count, word.Word)
