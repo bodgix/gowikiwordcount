@@ -1,3 +1,5 @@
+//Package wiki provides primitives for retrieving WikiPedia pages
+//as a WikiPage struct
 package wiki
 
 import (

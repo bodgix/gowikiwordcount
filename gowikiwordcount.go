@@ -3,15 +3,29 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 
+	"github.com/bodgix/gowikiwordcount/tools"
 	"github.com/bodgix/gowikiwordcount/wiki"
 )
 
 func main() {
-	page, err := wiki.GetPage("21721040")
+	pageID := os.Args[1]
+	n, err := strconv.Atoi(os.Args[2])
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("###", page.Title)
-	fmt.Println(page.Words)
+
+	page, err := wiki.GetPage(pageID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	wordsWithCount := tools.TopN(page.Words, n)
+	fmt.Println(page.Title)
+	fmt.Println()
+	for _, word := range wordsWithCount {
+		fmt.Println("-", word.Count, word.Word)
+	}
 }
